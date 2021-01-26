@@ -44,7 +44,7 @@ def get_data_from_web():
         # where keys represent the province codes
 
     provinces_dict = {}
-    print("\n\getting data from 'www.gib.gov.tr/plaka-harf-grubu ' \n")
+    print("\ngetting the tables from 'www.gib.gov.tr/plaka-harf-grubu' \n")
 
     for url_city in url_list:
         print("getting ...  " + url_city[55:-4])
@@ -190,19 +190,25 @@ def main():
 
     # t0 = time.time()
 
-    global PROVINCES_DICT
-    global CLEANSED_PROVINCES_DICT
-    global STRING_LIST
+    enter = ""
 
-    if "PROVINCES_DICT" not in globals():
-        PROVINCES_DICT = get_data_from_web()
-    if "CLEANSED_PROVINCES_DICT" not in globals():
-        CLEANSED_PROVINCES_DICT = data_cleansing(PROVINCES_DICT)
-    if "STRING_LIST" not in globals():
-        STRING_LIST = generate_string_range()
+    while enter == "":
+
+        global PROVINCES_DICT
+        global CLEANSED_PROVINCES_DICT
+        global STRING_LIST
+
+        if "PROVINCES_DICT" not in globals():
+            PROVINCES_DICT = get_data_from_web()
+        if "CLEANSED_PROVINCES_DICT" not in globals():
+            CLEANSED_PROVINCES_DICT = data_cleansing(PROVINCES_DICT)
+        if "STRING_LIST" not in globals():
+            STRING_LIST = generate_string_range()
 
 
-    print("\n" + generate_random_plate(CLEANSED_PROVINCES_DICT, STRING_LIST))
+        print("\n" + generate_random_plate(CLEANSED_PROVINCES_DICT, STRING_LIST))
+
+        enter = input("\nPress 'Enter' for a new plate or a random letter to exit:  ")
 
     # test_letters(CLEANSED_PROVINCES_DICT, STRING_LIST)
     # test_numbers(CLEANSED_PROVINCES_DICT)
