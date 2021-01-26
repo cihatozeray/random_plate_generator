@@ -1,6 +1,7 @@
 #random_plate_generator
 generates random vehicle license plates according to Turkish codes
 
+-------
 
 Generating random vehicle license plates are probably a mainstream homework among programming courses
 
