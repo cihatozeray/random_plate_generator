@@ -1,10 +1,14 @@
+#random_plate_generator
+generates random vehicle license plates according to Turkish codes
+
+
 Generating random vehicle license plates are probably a mainstream homework among programming courses
 
 -------
 
-In this example I researched constraints for license plates and I came across www.gib.gov.tr 
-(Turkish Republic Tax Administration website) which publishes those constraints valid for different
-areas of Turkey
+In this example I researched constraints for license plates and I came across www.gib.gov.tr/plaka-harf-grubu 
+(Turkish Republic Tax Administration website) which publishes those constraints for different
+provinces of Turkey
 
 -------
 
