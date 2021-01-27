@@ -1,5 +1,5 @@
 #random_plate_generator
-generates random vehicle license plates according to Turkish regulations
+Generates random vehicle license plates in accordance with Turkish regulations
 
 -------
 
