@@ -2,21 +2,24 @@
 """
 Created on Thu Sep 10 00:09:34 2020
 Modified on Tue Jan 26 2021
+
 @author: Cihat Özeray
 
 """
 
 import string
 import random
+import time
+import sys
 import urllib.request
 import pandas as pd
-# import time
 
 
 def get_data_from_web():
     """
-    web scraping using urllib
+    Web scraping using urllib
     """
+
     # getting the html as a string:
     url = 'https://www.gib.gov.tr/plaka-harf-grubu'
     response = urllib.request.urlopen(url)
@@ -60,9 +63,9 @@ def get_data_from_web():
 
 def data_cleansing(provinces_dict):
     """
-    data cleansing using pandas dataframe
-    takes dictionary of dataframes as input
-    returns dictionary of dataframes
+    Data cleansing using pandas dataframe
+    Takes dictionary of dataframes as input
+    Returns dictionary of dataframes
     """
 
     cleansed_provinces_dict = {}
@@ -102,14 +105,13 @@ def data_cleansing(provinces_dict):
         province_code = int(plate_boundary_list[1][0])
         cleansed_provinces_dict[province_code] = [i[1:] for i in plate_boundary_list]
 
-
     return cleansed_provinces_dict
 
 
 def generate_string_range():
     """
-    generates a string range to choose from
-    returns: List of strings
+    Generates a string list to represent a range
+    Returns list of strings
     """
 
     # from "A" to "ZZZ",  an ordered list is created for representing a string range
@@ -135,16 +137,18 @@ def generate_string_range():
 
 def generate_random_plate(cleansed_provinces_dict, string_list):
     """
-    generates a random plate within designated laws
-    returns: String
+    Generates a random plate within designated regulations
+    Returns a string
     """
 
     province = random.randint(1, 81)
     district = random.randint(0, len(cleansed_provinces_dict[province])-1)
     constraint = cleansed_provinces_dict[province][district]
+
     lower_boundary = string_list.index(constraint[0])
     upper_boundary = string_list.index(constraint[2])
     plate_middle = string_list[random.randint(lower_boundary, upper_boundary)]
+
     plate_end_int = random.randint(int(constraint[1]), int(constraint[3]))
 
     province, plate_end = str(province), str(plate_end_int)
@@ -160,6 +164,7 @@ def test_letters(cleansed_provinces_dict, string_list):
     Prints all of the strings available
     It is useful to test if data is missing or misread
     """
+
     for i in cleansed_provinces_dict.keys():
         for j in cleansed_provinces_dict[i]:
             for k in string_list[string_list.index(j[0]) : string_list.index(j[2]) + 1]:
@@ -172,6 +177,7 @@ def test_numbers(cleansed_provinces_dict):
     Prints start and end points of the number range
     It is useful to test if data is missing or misread
     """
+
     for i in cleansed_provinces_dict.keys():
         for j in cleansed_provinces_dict[i]:
             if not j[1].isnumeric() or not j[3].isnumeric():
@@ -182,17 +188,16 @@ def test_numbers(cleansed_provinces_dict):
 
 def main():
     """
-    main function:
+    Main function:
         Calls necessary functions to print a random plate
-        has tests for data acquisition and cleansing
-        has a test for time it takes to execute
+        Has tests for data acquisition and cleansing
+        Has a test for time it takes to execute
     """
 
-    # t0 = time.time()
-
     enter = ""
-
     while enter == "":
+
+        t_0 = time.time()
 
         global PROVINCES_DICT
         global CLEANSED_PROVINCES_DICT
@@ -205,16 +210,21 @@ def main():
         if "STRING_LIST" not in globals():
             STRING_LIST = generate_string_range()
 
+        if "test_letters" in sys.argv:
+            test_letters(CLEANSED_PROVINCES_DICT, STRING_LIST)
 
-        print("\n" + generate_random_plate(CLEANSED_PROVINCES_DICT, STRING_LIST))
+        if "test_numbers" in sys.argv:
+            test_numbers(CLEANSED_PROVINCES_DICT)
+
+        if "test_time" in sys.argv:
+            t_1 = time.time()
+            time_diff = str(t_1 - t_0)
+            print("\n" + time_diff)
+
+        plate = generate_random_plate(CLEANSED_PROVINCES_DICT, STRING_LIST)
+        print("\n" + plate)
 
         enter = input("\nPress 'Enter' for a new plate or a random letter to exit:  ")
-
-    # test_letters(CLEANSED_PROVINCES_DICT, STRING_LIST)
-    # test_numbers(CLEANSED_PROVINCES_DICT)
-
-    # t1 = time.time()
-    # print(t1-t0)
 
 
 if __name__ == "__main__":

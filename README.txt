@@ -1,5 +1,7 @@
 #random_plate_generator
 Generates random vehicle license plates in accordance with Turkish regulations
+Takes arguments [test_time], [test_letters], [test_numbers] (all optional) to test cleaning efficiency 
+or execution time
 
 -------
 
@@ -18,4 +20,4 @@ urllib module has been used for web scraping, and mainly Pandas is used for data
 -------
 
 At first try it takes around 22 seconds to execute (also depends on the connection) since it connects
-to web, then each plate takes around 0.001 seconds
+to web, then each plate takes around 0.0 seconds
